@@ -90,9 +90,19 @@ st.write(
 with st.spinner("Chargement du modèle..."):
     interpreter = load_interpreter()
 
-uploaded_file = st.file_uploader(
-    "Choisis une image (jpg, jpeg, png)", type=["jpg", "jpeg", "png"]
+source = st.radio(
+    "Source de l'image",
+    ["📁 Importer une photo", "📷 Prendre une photo (caméra)"],
+    horizontal=True,
 )
+
+uploaded_file = None
+if source == "📁 Importer une photo":
+    uploaded_file = st.file_uploader(
+        "Choisis une image (jpg, jpeg, png)", type=["jpg", "jpeg", "png"]
+    )
+else:
+    uploaded_file = st.camera_input("Prends une photo du fruit/légume")
 
 if uploaded_file is not None:
     image = Image.open(uploaded_file)
